@@ -18,10 +18,10 @@ setInterval(function() {
     if (elements.length > 0) {
         var element = elements.shift();
         element.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
-        var r = document.body.getBoundingClientRect();
+
+/*         var r = document.body.getBoundingClientRect();
         var ex = document.documentElement.scrollLeft;
         var ey = document.documentElement.scrollTop;
-
         var w = window,
         d = document,
         e = d.documentElement,
@@ -29,7 +29,7 @@ setInterval(function() {
         x = w.innerWidth || e.clientWidth || g.clientWidth,
         y = w.innerHeight|| e.clientHeight|| g.clientHeight;
         console.log("wx,wy,ex,ey="+x + ' × ' + y+","+r.width+","+r.height+","+ex+","+ey);
-
+ */
     } else {
         chrome.storage.sync.get("cssdog_active", function(data) {
             if (data.cssdog_active) {
@@ -48,7 +48,10 @@ setInterval(function() {
     // update the pause duration
     chrome.storage.sync.get("cssdog_pause", function(data) {
         if (!chrome.runtime.error && data.cssdog_pause != "") {
-            pause = data.cssdog_pause;
+            pause = parseInt(data.cssdog_pause);
+            if (pause == NaN) {
+                pause = 5000;
+            }
         }
     });
 
