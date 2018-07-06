@@ -3,7 +3,7 @@
 
   "name": "CSS Dog",
   "description": "Scrolls to page elements matching a CSS selector",
-  "version": "0.1.0",
+  "version": "0.2.0",
 
   "background": {
     "scripts": ["background.js"],
