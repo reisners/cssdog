@@ -1,6 +1,6 @@
 
 var elements = [];
-var pause = 5000;
+var pause = 10;
 var scrollUp    = { dx:  0, dy: -1 };
 var scrollDown  = { dx:  0, dy:  1 };
 var scrollLeft  = { dx: -1, dy:  0 };
@@ -10,6 +10,27 @@ var scrollPhase = 0;
 
 function scroll() {
 
+}
+
+function showDog() {
+    var imgURL = chrome.extension.getURL("dog.png");
+    var divCssdog = document.getElementById("cssdog");
+    if (divCssdog == null) {
+        divCssdog = document.createElement("img");
+        divCssdog.id = "cssdog";
+        divCssdog.className = "cssdog";
+        divCssdog.width = 64;
+        var fun = 'url(' + imgURL + ')';
+        divCssdog.src = imgURL;
+        document.body.appendChild(divCssdog);
+    }
+}
+
+function hideDog() {
+    var divCssdog = document.getElementById("cssdog");
+    if (divCssdog !== null) {
+        document.body.removeChild(divCssdog);
+    }
 }
 
 setInterval(function() {
@@ -33,6 +54,7 @@ setInterval(function() {
     } else {
         chrome.storage.sync.get("cssdog_active", function(data) {
             if (data.cssdog_active) {
+                showDog();
                 chrome.storage.sync.get("cssdog_selector", function(data) {
                     if (!chrome.runtime.error && data.cssdog_selector != "") {
                       var nodeList = document.querySelectorAll(data.cssdog_selector);
@@ -41,6 +63,8 @@ setInterval(function() {
                       }
                     }
                 });        
+            } else {
+                hideDog();
             }
         });
     }
